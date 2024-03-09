@@ -1,33 +1,24 @@
-const { log } = require("console");
 const http = require("http");
-const fs = require("fs");
-const url = require("url");
+const express = require('express')
+const app = express();
 
 
-const myServer = http.createServer((req, res) => {
-  // this fn is responsible for processing incoming req
-  const log = `${Date.now()}: ${req.url} New Request Received\n`;
-  const myurl = url.parse(req.url,true); // true for parsing query
-  console.log(myurl);
-  fs.appendFile("log.txt", log, (err, data) => {
-    switch (myurl.pathname) {
-      case "/":
-        res.end("Homepage");
-        break;
-      case "/about":
-        const username = myurl.query.myName;
-        res.end(`Hi ${username}`);
-        break;
+//app.METHOD(PATH,HANDLER_FN)
 
-        case "/search":
-          const search = myurl.query.search_query;
-          res.end(`these r the results for ${search}` );
-          break;
-      default:
-        res.end("404 NOt Found");
-    }
-  });
-});
+app.get("/",(req,res)=>{
+  res.end("HI from homepage")
+})
 
-myServer.listen(8000, () => console.log("Server Started!"));
+app.get("/about",(req,res)=>{
+  res.end("Hello from about page")
+})
+
+app.get("/info",(req,res)=>{
+  res.end(`Hello ${req.query.name}` );
+})
+
+// const myServer = http.createServer(app);
+// myServer.listen(8000, () => console.log("Server Started!"));
+
+app.listen(8000,()=>console.log("Server Started!"));
  

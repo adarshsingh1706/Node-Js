@@ -6,7 +6,7 @@ const app = express();
 //app.METHOD(PATH,HANDLER_FN)
 
 app.get("/",(req,res)=>{
-  res.end("HI from homepage")
+  res.end("homepage")
 })
 
 app.get("/about",(req,res)=>{

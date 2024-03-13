@@ -1,0 +1,17 @@
+Rest Api-JSON
+
+get/users => html doc render
+get/api/users => List all users JSON
+
+
+get/api/users/1 => get the user with iD 1
+
+dynamic path parameters: get/api/users/:id
+:id => variable
+
+get/api/users/1=>get the user with iD 2
+
+POST/api/users =>Create a new user
+Patch/api/users/id => Edit the user with ID 
+Delete/api/users/1 => delete the user with id 1
+

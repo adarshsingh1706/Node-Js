@@ -24,7 +24,7 @@ app.get("/api/users",(req,res)=>{
 
 app.get("/api/users/:id", (req,res)=>{
   const id = Number(req.params.id); // finding id req se then compairing
-  const user = users.find((user)=>user.id===id); // comparing from DB
+  const user = users.find((e)=>e.id===id); // comparing from DB
   return res.json(user);
 })
 

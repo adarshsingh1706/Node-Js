@@ -6,15 +6,15 @@ const app = express();
 //app.METHOD(PATH,HANDLER_FN)
 
 app.get("/",(req,res)=>{
-  res.end("homepage")
+  res.send("homepage")
 })
 
 app.get("/about",(req,res)=>{
-  res.end("Hello from about page")
+  res.send("Hello from about page")
 })
 
 app.get("/info",(req,res)=>{
-  res.end(`Hello ${req.query.name}` );
+  res.send(`Hello ${req.query.name}` );
 })
 
 // const myServer = http.createServer(app);

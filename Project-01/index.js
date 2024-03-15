@@ -7,6 +7,23 @@ const PORT = 8000;
 //middleware:plugin
 app.use(express.urlencoded({ extended: false }));
 
+app.use((req,res,next)=>{
+console.log("Hello from Middleware 1")
+// return res.json({msg:"Hello from Middleware 1"}) //here only i stopped the req & sended back the response so user cannot access below statements.
+
+//now if suppose i want to call the next fn so i will just call next();
+
+next();
+//we can also make changes to the req res objects
+//like this we use middleware
+})
+
+app.use((req,res,next)=>{
+  fs.appendFile("log.txt",`\n ${Date.now()},${req.ip},${req.path}`,(err,data)=>{
+    next();
+  })
+})
+
 //Routes
 
 //for html rendering
@@ -25,7 +42,7 @@ app.get("/api/users", (req, res) => {
   return res.json(users);
 });
 
-//to get info
+//to get info of an id
 app.get("/api/users/:id", (req, res) => {
   const id = Number(req.params.id); // finding id req se then compairing
   const user = users.find((e) => e.id === id); // comparing from DB
@@ -59,7 +76,7 @@ app.patch("/api/users/:id", (req, res) => {
       .json({ Error: "User Not found, please provide a valid ID" });
   }
 
-  Object.assign(userToUpdate, updatedData);
+  Object.assign(userToUpdate, updatedData); //data copied from updatedData to  userToUpdate
   return res.json({ message: "User updated successfully", user: userToUpdate });
 });
 

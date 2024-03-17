@@ -39,7 +39,10 @@ app.get("/users", (req, res) => {
 //REST api
 
 app.get("/api/users", (req, res) => {
+  console.log(req.headers);
+  res.setHeader("X-NAME","Chiku");//custom header, laways a good practice to add X- to custom headers.
   return res.json(users);
+
 });
 
 //to get info of an id

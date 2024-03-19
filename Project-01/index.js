@@ -49,6 +49,8 @@ app.get("/api/users", (req, res) => {
 app.get("/api/users/:id", (req, res) => {
   const id = Number(req.params.id); // finding id req se then compairing
   const user = users.find((e) => e.id === id); // comparing from DB
+  
+  if(!user) return res.status(404).json({msg:"No user found"})
   if(!user){
     return res.json({message:"user with provided ID does not exists"})
   }

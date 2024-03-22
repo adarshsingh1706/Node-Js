@@ -30,7 +30,7 @@ app.use((req,res,next)=>{
 app.get("/users", (req, res) => {
   const html = `
   <ul>
-  ${users.map((e) => `<li>${e.first_name}</li>`).join("")}
+  ${users.map((e) => `<li>${e.first_name},${e.gender}</li>`).join("")}
   </ul>
   `;
   res.send(html);

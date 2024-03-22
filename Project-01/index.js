@@ -38,7 +38,9 @@ const userSchema = new mongoose.Schema({
     required:true
   }
 
-})
+},
+ {timestamps:true} // shows in db when created, updated
+)
  
 //model
 
@@ -71,10 +73,14 @@ app.use((req,res,next)=>{
 //Routes
 
 //for html rendering
-app.get("/users", (req, res) => {
+app.get("/users", async(req, res) => {
+const allDBUsers = await User.find({}) //brings all entries in DB
+
+
+
   const html = `
   <ul>
-  ${users.map((e) => `<li>${e.first_name},${e.gender}</li>`).join("")}
+  ${allDBUsers.map((e) => `<li>${e.firstName} - ${e.emailId}</li>`).join("")}
   </ul>
   `;
   res.send(html);
@@ -82,17 +88,19 @@ app.get("/users", (req, res) => {
 
 //REST api
 
-app.get("/api/users", (req, res) => {
-  console.log(req.headers);
-  res.setHeader("X-NAME","Chiku");//custom header, laways a good practice to add X- to custom headers.
-  return res.json(users);
+app.get("/api/users", async(req, res) => {
+  const allDBUsers = await User.find({})
+  return res.json(allDBUsers );
+  // res.setHeader("X-NAME","Chiku");//custom header, always a good practice to add X- to custom headers.
+  
 
 });
 
 //to get info of an id
-app.get("/api/users/:id", (req, res) => {
-  const id = Number(req.params.id); // finding id req se then compairing
-  const user = users.find((e) => e.id === id); // comparing from DB
+app.get("/api/users/:id", async(req, res) => {
+  
+  const user = await(User.findById(req.params.id));
+
   
   if(!user) return res.status(404).json({msg:"No user found"})
   if(!user){
@@ -122,7 +130,7 @@ const result = await User.create({
   jobTitle:body.JobTitle
   
  })
-  console.log("result" , result);
+  
 
  return res.status(201).json({msg:"success"})
 
@@ -134,39 +142,18 @@ const result = await User.create({
 
 //editing using patch
 
-app.patch("/api/users/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const updatedData = req.body;
+app.patch("/api/users/:id", async(req, res) => {
 
-  const userToUpdate = users.find((e) => e.id === id);
-  if (!userToUpdate) {
-    return res
-      .status(404)
-      .json({ Error: "User Not found, please provide a valid ID" });
-  }
-
-  Object.assign(userToUpdate, updatedData); //data copied from updatedData to  userToUpdate
-  return res.json({ message: "User updated successfully", user: userToUpdate });
+  await User.findByIdAndDelete(req.params.id,{lastName:req.body.lastName})
+  return res.json({ message: "User updated successfully"}) 
+  
 });
 
 
 //for deleting user
-app.delete("/api/users/:id", (req,res)=>{
-  const id = Number( req.params.id);
-  
-
-  const userToDeleteIndex = users.findIndex((e)=>e.id === id);
-
-   //error handling
-  if(userToDeleteIndex==-1){
-    return res
-    .status(404)
-    .json({message:"No user available with that ID" ,})
-  }
-
-  // when found
-  users.splice(userToDeleteIndex,1); //users.splice(start,deletecount);
-  return res.json({message:"User deleted succesfully"})
+app.delete("/api/users/:id", async(req,res)=>{
+  await User.findByIdAndDelete(req.params.id)
+  return res.json({msg:"Successss"})
 })
 
 

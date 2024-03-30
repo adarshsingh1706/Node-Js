@@ -30,7 +30,9 @@ async function handleCreateNewUser(req,res){
      !body.gender ||
      !body.email ||
      !body.JobTitle){
+      console.log(req.body);
     return res.status(400).json({msg:"All fields are mandatory"})
+    
   }
 const result = await User.create({
   firstName: body.firstName,
@@ -40,7 +42,7 @@ const result = await User.create({
   jobTitle:body.JobTitle
 })
   
-return res.status(201).json({msg:"success" , id:result._id})
+return res.status(201).json({msg:"success" , id:result._id })
 }
 module.exports = {
   handleAllUsers,

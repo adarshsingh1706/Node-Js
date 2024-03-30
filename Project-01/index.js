@@ -10,10 +10,10 @@ const PORT = 8000;
 
 
 //connection
-connectMongoDb("mongodb://127.0.0.1:27017/db1");
+connectMongoDb("mongodb://127.0.0.1:27017/db1").then(()=>console.log("MongoDb Connected"));
 
 //middleware:plugin
 app.use(logReqRes("log.txt"))
 
-app.use("/user", useRouter);
+app.use("/api/users", useRouter);
 app.listen(PORT, () => console.log(`Server Started at Port: ${PORT}`));

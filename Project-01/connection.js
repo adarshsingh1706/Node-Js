@@ -10,6 +10,11 @@ module.exports = {
   connectMongoDb,
 };
 
+
+
+
+
+
 /*This code defines a function `connectMongoDb` that connects to a MongoDB database using Mongoose. Here's a summary of what's happening:
 
 1. `const mongoose = require("mongoose");` - Importing the Mongoose library.

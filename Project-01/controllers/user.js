@@ -44,6 +44,9 @@ const result = await User.create({
   
 return res.status(201).json({msg:"success" , id:result._id })
 }
+
+
+
 module.exports = {
   handleAllUsers,
   handleGetUserById,

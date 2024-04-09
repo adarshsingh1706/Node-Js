@@ -10,6 +10,7 @@ const PORT = 8000;
 connectMongoDb("mongodb://127.0.0.1:27017/db1").then(()=>console.log("MongoDb Connected"));
 
 //middleware:plugin
+app.use(express.urlencoded({ extended: true }));
 app.use(logReqRes("log.txt"))
 
 app.use("/api/users", useRouter);

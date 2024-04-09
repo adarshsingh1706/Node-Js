@@ -12,7 +12,12 @@ async function handleGetUserById(req, res) {
 }
 
 async function handleUpdateUserById(req,res){
-  await User.findByIdAndUpdate(req.params.id,{lastName:req.body.lastName})
+  await User.findByIdAndUpdate(req.params.id,{firstName:req.body.firstName,
+    lastName:req.body.lastName,
+    emailId:req.body.emailId,
+    gender:req.body.gender,
+    jobTitle:req.body.jobTitle
+  })
   return res.json({ message: "User updated successfully"}) 
 }
 

@@ -1,0 +1,7 @@
+^4.18.3
+
+1st digit => 4(big change)
+2nd digit =>18(recomended change)
+3rd digit => 3(small bug fix)
+
+^4.18.3  The ^ symbol in front of the version number in Node.js's package.json file indicates that you're willing to accept updates for the package as long as they don't change the major version number. So, in your example, you're allowing updates for the package as long as the major version remains 4, but you're okay with minor (18) and patch (3) version changes.

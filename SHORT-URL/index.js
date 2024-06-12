@@ -1,11 +1,12 @@
 const express = require('express');
+require('dotenv').config()
 const app = express();
-const PORT = 7001;
+const PORT = process.env.PORT;
 const urlRoute = require('./routes/url');
 const {connectToMongoDB} = require("./connection");
 const URL = require('./model/url')
 
-connectToMongoDB('mongodb://127.0.0.1:27017/short-url')
+connectToMongoDB(process.env.MONGO_URL)
 .then(()=>console.log("MongoDb Connected"));
 //middleware
 app.use(express.json());
@@ -25,4 +26,4 @@ res.redirect(entry.redirectUrl)
 })
 
 
-app.listen(PORT,()=> console.log(`Server Started at port: ${PORT}`))
+app.listen(process.env.PORT,()=> console.log(`Server Started at port: ${PORT}`))
